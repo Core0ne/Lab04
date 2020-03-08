@@ -57,19 +57,15 @@ namespace Lab04
             StringBuilder encodedMessage = new StringBuilder(encodedMessageTextBox.Text);
             StringBuilder decodedMessage = new StringBuilder();
 
+            StringBuilder partOfMessage = new StringBuilder();
             while (encodedMessage.Length != 0)
             {
-                StringBuilder partOfMessage = new StringBuilder();
-                int length = encodedMessage.Length;
-                for (int i = 0; i < length; i++)
+                partOfMessage.Append(encodedMessage[0]);
+                encodedMessage.Remove(0, 1);
+                if (dictionary.ContainsValue(partOfMessage.ToString()))
                 {
-                    partOfMessage.Append(encodedMessage[0]);
-                    encodedMessage.Remove(0, 1);
-                    if (dictionary.ContainsValue(partOfMessage.ToString()))
-                    {
-                        decodedMessage.Append(dictionary.FirstOrDefault(x => x.Value == partOfMessage.ToString()).Key);
-                        break;
-                    }
+                    decodedMessage.Append(dictionary.FirstOrDefault(x => x.Value == partOfMessage.ToString()).Key);
+                    partOfMessage.Clear();
                 }
             }
 
